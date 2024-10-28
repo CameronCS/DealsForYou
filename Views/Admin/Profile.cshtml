@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Admin Profile";
+}
+
+
+@model User
+
+<div>
+    <h1>Admin Profile!</h1>
+    <div>
+        <p>Username: @Model.Username</p>
+        <p>First Name: @Model.FirstName</p>
+        <p>Last Name: @Model.LastName</p>
+        <p>Email: @Model.Email</p>
+        <p>Cell: @Model.Cell</p>
+    </div>
+</div>
