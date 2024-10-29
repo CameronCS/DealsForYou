@@ -4,7 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace DealsForYou.Controllers {
     public class AdminController : Controller {
         public IActionResult Index() {
+            List<CurrentStock> current = DB.GetCurrent();
+            return View(current);
+        }
+
+        [HttpGet]
+        public IActionResult AddStock() {
             return View();
+        }
+        
+        [HttpPost]
+        public IActionResult AddStock(StockModel m) {
+            return View(m);
         }
 
         public IActionResult Profile() {
@@ -14,6 +25,20 @@ namespace DealsForYou.Controllers {
 
             return View(newUser);
         }
+
+        [HttpPost]
+        public IActionResult AddToSystem(StockModel mymod) {
+            if (ModelState.IsValid && mymod.UploadedFile != null) {
+                if (DB.AddStock(mymod)) {
+                    return Redirect("Index"); // Return to the AddStock view with the model for validation errors
+                    
+                }
+                return View("AddStock", mymod); // Return to the AddStock view with the model for validation errors
+            }
+            return View("AddStock", mymod); // Return to the AddStock view with the model for validation errors
+        }
+
+
 
         public IActionResult LogOut() {
             AppStateModel.State = 0;

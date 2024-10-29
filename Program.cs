@@ -1,4 +1,5 @@
 using DealsForYou.Models;
+using Microsoft.AspNetCore.Http.Features;
 
 internal class Program {
     private static void Main(string[] args) {
@@ -7,6 +8,11 @@ internal class Program {
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddSession();
+
+        // Configure maximum file upload size
+        builder.Services.Configure<FormOptions>(options => {
+            options.MultipartBodyLengthLimit = 10 * 1024 * 1024; // Set limit to 10 MB
+        });
 
         var app = builder.Build();
 
@@ -31,7 +37,7 @@ internal class Program {
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
         AppStateModel.State = 0;
-            
+
         app.Run();
     }
 }

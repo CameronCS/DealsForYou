@@ -52,8 +52,21 @@ namespace DealsForYou.Controllers {
             return View();
         }
 
-        public IActionResult RegisterUser(User model) {
-            return Redirect("Login");
+        [HttpPost]
+        public IActionResult RegisterUser(RegisterModel model) {
+            if (ModelState.IsValid) {
+                try {
+                    if (DB.CreateUser(model, false)) {
+                        return Redirect("Login");
+                    } else {
+                        return Redirect("Register");
+                    }
+                
+                } catch(Exception) {
+                    return Redirect("Register");
+                }
+            }
+            return Redirect("Register");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

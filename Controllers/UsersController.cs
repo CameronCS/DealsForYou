@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DealsForYou.Controllers {
     public class UsersController : Controller {
         public IActionResult Index() {
-            return View();
+            List<CurrentStock> current = DB.GetCurrent();
+            return View(current);
         }
 
         public IActionResult Profile() {

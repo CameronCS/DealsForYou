@@ -2,7 +2,23 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["title"] = "User home";
+    ViewData["Title"] = "Home";
 }
 
-<h1>User Logged In</h1>
+@model List<CurrentStock>
+
+<div>
+    <h1>Shop our items</h1>
+    @foreach (CurrentStock item in Model) {
+        <hr />
+        <div>
+            <p>Make @item.Make</p>
+            <p>Model @item.Model</p>
+            <p>Vin @item.Vin</p>
+            <p>License @item.License</p>
+            <p>Price R @item.Price</p>
+        </div>
+        <hr />
+    }
+
+</div>
