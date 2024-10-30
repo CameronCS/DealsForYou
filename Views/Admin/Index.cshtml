@@ -3,6 +3,7 @@
 *@
 @{
     ViewData["Title"] = "Home";
+    string imagedata_as_string = "";
 }
 
 @model List<CurrentStock>
@@ -12,6 +13,12 @@
     @foreach (CurrentStock item in Model) {
         <hr />
         <div>
+            @if (item.Image != null) {
+                imagedata_as_string = $"data:{item.Image.FileName};base64,{Convert.ToBase64String(item.Image.image_data)}";
+            }
+
+            <img src="@imagedata_as_string" alt="Car Image" style="width:200px;height:auto" />
+
             <p>Make @item.Make</p>
             <p>Model @item.Model</p>
             <p>Vin @item.Vin</p>
