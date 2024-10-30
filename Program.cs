@@ -11,7 +11,7 @@ internal class Program {
 
         // Configure maximum file upload size
         builder.Services.Configure<FormOptions>(options => {
-            options.MultipartBodyLengthLimit = 10 * 1024 * 1024; // Set limit to 10 MB
+            options.MultipartBodyLengthLimit = 50 * 1024 * 1024; // Set limit to 50 MB
         });
 
         var app = builder.Build();

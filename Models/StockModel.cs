@@ -11,6 +11,11 @@ namespace DealsForYou.Models {
         public string Model {
             get; set;
         }
+        
+        [Required(ErrorMessage = "Year is required.")]
+        public string Year {
+            get; set;
+        }
 
         [Required(ErrorMessage = "VIN is required.")]
         public string Vin {

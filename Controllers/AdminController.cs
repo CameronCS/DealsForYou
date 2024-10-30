@@ -12,7 +12,7 @@ namespace DealsForYou.Controllers {
         public IActionResult AddStock() {
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult AddStock(StockModel m) {
             return View(m);
@@ -31,14 +31,37 @@ namespace DealsForYou.Controllers {
             if (ModelState.IsValid && mymod.UploadedFile != null) {
                 if (DB.AddStock(mymod)) {
                     return Redirect("Index"); // Return to the AddStock view with the model for validation errors
-                    
+
                 }
                 return View("AddStock", mymod); // Return to the AddStock view with the model for validation errors
             }
             return View("AddStock", mymod); // Return to the AddStock view with the model for validation errors
         }
 
+        [HttpGet]
+        public IActionResult Edit(int ID) {
+            CurrentStock current = DB.GetStockByID(ID);
+            return View(current);
+        }
 
+        [HttpPost]
+        public IActionResult EditPrice(int id, int price) {
+            if (DB.EditPriceById(id, price)) {
+                return Redirect("Index");
+            } else {
+                return RedirectToAction("Edit", id);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id) {
+            CurrentStock stock = DB.GetStockByID(id);
+            if (DB.DeleteItemById(id)) {
+                return View(stock);
+            } else {
+                return Redirect("Index");
+            }
+        }
 
         public IActionResult LogOut() {
             AppStateModel.State = 0;

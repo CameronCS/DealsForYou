@@ -92,12 +92,13 @@ namespace DealsForYou.Models {
                 model.UploadedFile.CopyTo(memoryStream);
                 byte[] imageData = memoryStream.ToArray();
 
-                string qry = @"INSERT INTO car (make, model, vin, license, price, image, image_name, file_type) 
-                               VALUES (@make, @model, @vin, @license, @price, @image, @imageName, @fileType)";
+                string qry = @"INSERT INTO car (make, model, year, vin, license, price, image, image_name, file_type) 
+                               VALUES (@make, @model, @year, @vin, @license, @price, @image, @imageName, @fileType)";
 
                 using var cmd = new MySqlCommand(qry, con);
                 cmd.Parameters.AddWithValue("@make", model.Make);
                 cmd.Parameters.AddWithValue("@model", model.Model);
+                cmd.Parameters.AddWithValue("@year", model.Year);
                 cmd.Parameters.AddWithValue("@vin", model.Vin);
                 cmd.Parameters.AddWithValue("@license", model.License);
                 cmd.Parameters.AddWithValue("@price", int.Parse(model.Price)); // Convert price to int
@@ -118,7 +119,7 @@ namespace DealsForYou.Models {
             using MySqlConnection con = new(constr);
             con.Open();
 
-            string qry = "SELECT id, make, model, vin, license, price, image, image_name, file_type FROM car";
+            string qry = "SELECT id, make, model, year, vin, license, price, image, image_name, file_type FROM car";
             using MySqlCommand cmd = new(qry, con);
             using MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -133,6 +134,7 @@ namespace DealsForYou.Models {
                     ID = reader.GetInt32("id"),
                     Make = reader.GetString("make"),
                     Model = reader.GetString("model"),
+                    Year = reader.GetInt32("year"),
                     Vin = reader.GetString("vin"),
                     License = reader.GetString("license"),
                     Price = reader.GetInt32("price"),
@@ -144,7 +146,66 @@ namespace DealsForYou.Models {
 
             return currentStockList;
         }
-    }
+        public static CurrentStock GetStockByID(int id) {
+            MySqlConnection con = new(constr);
+            con.Open();
 
+            string qry = "SELECT id, make, model, year, vin, license, price, image, image_name, file_type FROM car WHERE id = @id";
+            MySqlCommand cmd = new(qry, con);
+            cmd.Parameters.AddWithValue("@id", id);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+
+            ImageModel img = new ImageModel() {
+                image_data = reader["image"] as byte[], // Assuming the image is stored as a byte array
+                FileName = reader.GetString("image_name"),
+                FileType = reader.GetString("file_type")
+            };
+
+            CurrentStock stock = new CurrentStock {
+                ID = reader.GetInt32("id"),
+                Make = reader.GetString("make"),
+                Model = reader.GetString("model"),
+                Year = reader.GetInt32("year"),
+                Vin = reader.GetString("vin"),
+                License = reader.GetString("license"),
+                Price = reader.GetInt32("price"),
+                Image = img
+            };
+
+            return stock;
+        }
+
+        public static bool EditPriceById(int id, int price) {
+            MySqlConnection con = new(constr);
+            con.Open();
+
+            string qry = "UPDATE car SET price = @price WHERE id = @id";
+            MySqlCommand cmd = new(qry, con);
+            cmd.Parameters.AddWithValue("@price", price);
+            cmd.Parameters.AddWithValue("@id", id);
+            try {
+                cmd.ExecuteNonQuery();
+                return true;
+            } catch(Exception) {
+                return false;
+            }
+        }
+
+        public static bool DeleteItemById(int id) {
+            MySqlConnection con = new(constr);
+            con.Open();
+
+            string qry = "DELETE FROM car WHERE id = @id";
+            MySqlCommand cmd = new(qry, con);
+            cmd.Parameters.AddWithValue("@id", id);
+            try {
+                cmd.ExecuteNonQuery();
+                return true;
+            } catch (Exception) {
+                return false;
+            }
+        }
+    }
 
 }
