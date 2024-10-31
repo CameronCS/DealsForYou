@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Offers";
+}
+
+@model List<OfferPreview>
+
+<div>
+    <h1>All Active Offers</h1>
+    <div>
+        @foreach (OfferPreview item in Model) {
+            <hr />
+            <div>
+                <h2>@item.Year @item.Make @item.Model</h2>
+                <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" style="width:200px;height:auto" />
+                <p>Offer from: @item.Username - @item.FirstName @item.LastName</p>
+                <p>For the: @item.Year @item.Make @item.Model</p>
+                <p>Offer Value: @item.FAmount</p>
+
+                <form asp-controller="Admin" asp-action="Offer" method="post">
+                    <input name="id" value="@item.ID" hidden/>
+                    <input name="user_id" value="@item.UserId" hidden/>
+                    <input name="car_id" value="@item.CarId" hidden/>
+                    <button type="submit">View Offer</button>
+                </form>
+            </div>
+            <hr />
+        }
+    </div>
+</div>

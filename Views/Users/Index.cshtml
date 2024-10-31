@@ -1,12 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@using System.Globalization;
-
-@{
+﻿@{
     ViewData["Title"] = "Home";
-    string imagedata_as_string = "";
 }
 
 @model List<CurrentStock>
@@ -16,26 +9,18 @@
     @foreach (CurrentStock item in Model) {
         <hr />
         <div>
-            @if (item.Image != null) {
-                imagedata_as_string = $"data:{item.Image.FileName};base64,{Convert.ToBase64String(item.Image.image_data)}";
-            }
-
-            <img src="@imagedata_as_string" alt="Car Image" style="width:200px;height:auto" />
+            <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" style="width:200px;height:auto" />
 
             <p>Make: @item.Make</p>
             <p>Model: @item.Model</p>
             <p>Year: @item.Year</p>
-            <p>Vin: @item.Vin</p>
-            <p>License: @item.License</p>
-
-            @{
-                var culture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
-                culture.NumberFormat.NumberGroupSeparator = " ";
-                var str_price = $"R{item.Price.ToString("N0", culture)}";
-            }
-
-            <p>Price: @str_price</p>
+            <p>Price: @item.FPrice</p>
         </div>
+
+        <form asp-action="ViewDetails" asp-controller="Users" method="get">
+            <input name="id" for="id" value="@item.ID" hidden/>
+            <button type="submit">View Details</button>
+        </form>
         <hr />
     }
 

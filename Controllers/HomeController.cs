@@ -21,7 +21,7 @@ namespace DealsForYou.Controllers {
         [HttpPost]
         public IActionResult LogUserIn(LoginModel model) {
             if (!ModelState.IsValid) {
-                return View();
+                return Redirect("Login");
             }
 
             string username = model.Username;
@@ -32,7 +32,7 @@ namespace DealsForYou.Controllers {
 
             (id, admin) = DB.Login(username, password);
             if (id == 0) {
-                return View();
+                return View("Login");
             }
 
             HttpContext.Session.SetInt32("user_id", id);

@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "Payment";
+}
+
+@model CurrentStock
+
+<div>
+    <h1>Purchase a @Model.Year @Model.Make @Model.Model</h1>
+
+    <img src="data:@Model.Image.FileName;Base64,@Convert.ToBase64String(Model.Image.image_data)" style="width:200px;height:auto" />
+
+    <form asp-action="SubmitOffer" asp-controller="Users">
+        <input name="id" value="@Model.ID" hidden/>
+        <input name="price" readonly value="@Model.Price" hidden/>
+
+        <label>Price @Model.FPrice</label>
+
+        <label>Offer</label>
+        <input name="offer"/>
+
+        <label>Payment Terms</label>
+        <select name="terms" id="select_terms">
+            <option>Once Off</option>
+            <option>1 Year</option>
+            <option>2 Years</option>
+            <option>3 Years</option>
+            <option>4 Years</option>
+            <option>5 Years</option>
+        </select>
+        <input name="months" hidden/>
+
+        <div class="opt invis">
+            <label>Interest</label>
+            <input readonly name="interest" value="0%"/>
+        </div>
+
+        <div class="opt invis">
+            <label>Monthly Amount</label>
+            <input id="monthly" name="monthly"/>
+        </div>
+
+        <label>Final Amount</label>
+        <input id="final" name="total"/>
+
+        <button type="submit">Submit Offer</button>
+    </form>
+
+    <form asp-action="ViewDetails" asp-controller="Users" method="get">
+        <input name="id" value="@Model.ID" hidden/>
+        <button type="submit">Go Back</button>
+    </form>
+
+    <form asp-action="Index" asp-controller="Users" method="get">
+        <button type="submit">Back To Shop</button>
+    </form>
+</div>
+
+<script>
+    const cmb = document.querySelector("#select_terms");
+    const offerInput = document.querySelector("[name=offer]");
+    const monthly = document.querySelector("#monthly");
+    const final = document.querySelector("#final");
+    const interestField = document.querySelector("input[name='interest']");
+    const monthsField = document.querySelector('input[name="months"]')
+    const optDiv = document.querySelector(".opt");
+
+    let basePrice = @Model.Price;
+
+    const interestRates = {
+        "Once Off": 0,
+        "1 Year": 0.05,
+        "2 Years": 0.1,
+        "3 Years": 0.15,
+        "4 Years": 0.2,
+        "5 Years": 0.25
+    };
+
+    function updateFinalAmount() {
+        const selectedTerm = cmb.value;
+        basePrice = parseFloat(offerInput.value) || @Model.Price;
+
+        if (selectedTerm === "Once Off") {
+            optDiv.classList.add("invis");
+            interestField.value = "0%";
+            final.value = basePrice.toFixed(0);
+            if (monthly) {
+                monthsField.value = 0;
+                monthly.value = "";
+            }
+        } else {
+            optDiv.classList.remove("invis");
+            const years = parseInt(selectedTerm.split(" ")[0]);
+            const months = years * 12;
+            const interestRate = interestRates[selectedTerm];
+            const totalWithInterest = basePrice * (1 + interestRate);
+            interestField.value = (interestRate * 100) + "%";
+            if (monthly) {
+                monthly.value = (totalWithInterest / months).toFixed(0);
+                monthsField.value = months;
+            }
+            final.value = totalWithInterest.toFixed(0);
+        }
+    }
+
+    window.onload = () => {
+        offerInput.value = basePrice.toFixed(0);
+        optDiv.classList.add("invis");
+        interestField.value = "0%";
+        final.value = basePrice.toFixed(0);
+    }
+
+    cmb.addEventListener("change", updateFinalAmount);
+    offerInput.addEventListener("input", updateFinalAmount);
+</script>
+
+<style>
+    .opt {
+        display: block;
+    }
+    .invis {
+        display: none;
+    }
+</style>

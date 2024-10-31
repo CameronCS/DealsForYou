@@ -18,6 +18,16 @@ namespace DealsForYou.Controllers {
             return View(m);
         }
 
+        public IActionResult Offers() {
+            List<OfferPreview> previews = DB.GetAllPreviews();
+            return View(previews);
+        }
+
+        public IActionResult Offer(int id, int user_id, int car_id) {
+            FullOffer offer = DB.GetFullOffer(id, user_id, car_id);
+            return View(offer);
+        }
+
         public IActionResult Profile() {
             int id = HttpContext.Session.GetInt32("user_id") ?? 0;
 

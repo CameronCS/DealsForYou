@@ -1,0 +1,76 @@
+﻿@model FullOffer
+
+@{
+    ViewData["Title"] = "Offer";
+    int years = Model.Offer.Months / 12;
+}
+
+
+
+<div>
+    <h1>Full offer for @Model.Car.Year @Model.Car.Make @Model.Car.Year</h1>
+    <div>
+        <h2>Car Details</h2>
+
+        <img src="data:@Model.Car.Image.FileName;base64,@Convert.ToBase64String(Model.Car.Image.image_data)" style="width:200px;height:auto" alt="CarImage"/>
+
+        <p>Make: @Model.Car.Make</p>
+        <p>Model: @Model.Car.Model</p>
+        <p>Model: @Model.Car.Year</p>
+        <p>Lisence: @Model.Car.License</p>
+        <p>Vin: @Model.Car.Vin</p>
+        <p>Initial Selling Price: @Model.Car.FPrice</p>
+    </div>
+
+    <hr />
+
+    <div>
+        <h2>User Details</h2>
+
+        <p>Username: @Model.User.Username</p>
+        <p>Name: @Model.User.FirstName</p>
+        <p>Surname: @Model.User.LastName</p>
+        <p>Email: @Model.User.Email</p>
+        <p>Cell: @Model.User.Cell</p>
+    </div>
+
+    <hr />
+
+    <div>
+        <h2>Offer Details</h2>
+
+        <h3>Offer Summary</h3>
+        <p>Car Price: @Model.Offer.FPrice</p>
+        <p>Offer Amount: @Model.Offer.FAmount</p>
+        
+        @if(Model.Offer.Months != 0) {
+            <h3>Interest Summary</h3>
+
+            <p>Years: @years</p>
+            <p>Total Months: @Model.Offer.Months</p>
+            <p>Interest: @Model.Offer.Interest%</p>
+            <p>Monthly Total: @Model.Offer.FMonthly</p>
+            <p>Total Offer Value: @Model.Offer.FTotal</p>
+        } else {
+            <p>Once Off Payment</p>
+        }
+    </div>
+    <div>
+        <div style="display:flex;justify-content:space-evenly">
+            <form asp-action="AcceptOffer" asp-controller="Admin" method="get" style="margin:10px">
+                <button>Accept Offer</button>
+            </form>
+            <form asp-action="RejectOffer" asp-controller="Admin" method="get" style="margin:10px">
+                <button>Reject Offer</button>
+            </form>
+        </div>
+        <div style="display:flex;justify-content:space-evenly">
+            <form asp-action="Index" asp-controller="Admin" method="get" style="margin:10px">
+                <button>Manage Stock</button>
+            </form>
+            <form asp-action="Offers" asp-controller="Admin" method="get" style="margin:10px">
+                <button>Back to Offers</button>
+            </form>
+    </div>
+    </div>
+</div>

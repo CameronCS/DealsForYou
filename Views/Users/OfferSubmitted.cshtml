@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Submitted";
+}
+
+@model User
+
+<div>
+    <h1>Offer Submitted</h1>
+    <div>
+        <p>Thank you @Model.FirstName @Model.LastName for submitting an offer to us!</p>
+        <p>Please check in regularly to see if your offer has been proccessed</p>
+        <a asp-action="Index" asp-controller="Users">Back To Browse</a>
+    </div>
+</div>

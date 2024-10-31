@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace DealsForYou.Models {
     public class CurrentStock {
@@ -12,7 +13,7 @@ namespace DealsForYou.Models {
         public string Model {
             get; set;
         }
-        
+
         public int Year {
             get; set;
         }
@@ -29,6 +30,14 @@ namespace DealsForYou.Models {
             get; set;
         }
 
+        public string FPrice {
+            get {
+                var culture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+                culture.NumberFormat.NumberGroupSeparator = " ";
+                var str_price = $"R{this.Price.ToString("N0", culture)}";
+                return str_price;
+            }
+        }
         public ImageModel Image {
             get; set;
         }
