@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "View All Invoices";
+}
+
+@model List<UserInvoiceDetails>
+
+<div class="invoice-container">
+    <h1 class="invoice-title">View All Invoices</h1>
+
+    @if (Model.Count == 0) {
+        <p class="no-invoices">No invoices available.</p>
+    } else {
+        foreach (UserInvoiceDetails item in Model) {
+            <div class="invoice-card">
+                <h2 class="invoice-name">Invoice: @item.InvoiceName</h2>
+                <p class="invoice-details">Invoice for: @item.CarYear @item.CarMake @item.CarModel</p>
+                <form asp-controller="Users" asp-action="ViewInvoice" method="get" class="view-invoice-form">
+                    <input value="@item.InvoiceId" name="invoice_id" type="hidden" />
+                    <button type="submit" class="view-invoice-button">View Invoice</button>
+                </form>
+            </div>
+        }
+    }
+</div>
+

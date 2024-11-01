@@ -18,26 +18,8 @@ namespace DealsForYou.Models {
             get; set;
         }
 
-        public string FAmount {
-            get {
-                var culture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
-                culture.NumberFormat.NumberGroupSeparator = " ";
-                var str_price = $"R{this.Amount.ToString("N0", culture)}";
-                return str_price;
-            }
-        }
-
         public int Total {
             get; set;
-        }
-
-        public string FTotal {
-            get {
-                var culture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
-                culture.NumberFormat.NumberGroupSeparator = " ";
-                var str_price = $"R{this.Total.ToString("N0", culture)}";
-                return str_price;
-            }
         }
 
         public string FirstName {

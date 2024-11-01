@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Generate Invoice";
+}
+
+@model InvoiceDetails
+
+<div class="invoice-container">
+    <h2 class="invoice-title">Invoice for Your Offer @Model.OfferId</h2>
+    <hr />
+
+    @{
+        string invoice_number = $"DFYINV{Model.ID}";
+    }
+
+    <h3 class="invoice-number">Invoice Number: @invoice_number</h3>
+
+    <div class="invoice-section">
+        <h4 class="section-title">User Details</h4>
+        <p>
+            <strong>Username:</strong> @Model.Username <br />
+            <strong>First Name:</strong> @Model.FirstName <br />
+            <strong>Last Name:</strong> @Model.LastName <br />
+            <strong>Email:</strong> @Model.Email <br />
+            <strong>Cell:</strong> @Model.Cell <br />
+        </p>
+    </div>
+
+    <hr />
+
+    <div class="invoice-section">
+        <h4 class="section-title">Car Details</h4>
+        <p>
+            <strong>Make:</strong> @Model.Make <br />
+            <strong>Model:</strong> @Model.Model <br />
+            <strong>Year:</strong> @Model.Year <br />
+            <strong>VIN:</strong> @Model.Vin <br />
+            <strong>License:</strong> @Model.License <br />
+            <strong>Price:</strong> @Currency.GetCurrency(Model.CarPrice) <br />
+        </p>
+    </div>
+
+    <hr />
+
+    <div class="invoice-section">
+        <h4 class="section-title">Invoice Details</h4>
+        <p>
+            <strong>Offer Amount:</strong> @Currency.GetCurrency(Model.OfferAmount) <br />
+        </p>
+
+        @for (int month = 1; month <= Model.Months; month++) {
+            <p><strong>Month @month:</strong> @Currency.GetCurrency(Model.Monthly)</p>
+        }
+
+        <p><strong>Total:</strong> @Currency.GetCurrency(Model.Total)</p>
+    </div>
+
+    <div class="generate-pdf">
+        <form asp-action="GeneratePdf" asp-controller="Admin" method="post">
+            <input type="hidden" name="invoiceId" value="@Model.ID" />
+            <button type="submit" class="btn btn-primary">Generate PDF</button>
+        </form>
+    </div>
+</div>

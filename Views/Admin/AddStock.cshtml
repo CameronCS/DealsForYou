@@ -4,41 +4,54 @@
 
 @model DealsForYou.Models.StockModel
 
-<div>
-    <h1>Add New Stock</h1>
-    <form asp-controller="Admin" asp-action="AddToSystem" method="post" enctype="multipart/form-data">
-        <label asp-for="Make">Make</label>
-        <input asp-for="Make" />
-        <span asp-validation-for="Make" class="text-danger"></span>
+<div class="add-stock-container">
+    <h1 class="add-stock-title">Add New Stock</h1>
+    <form asp-controller="Admin" asp-action="AddToSystem" method="post" enctype="multipart/form-data" class="add-stock-form">
 
-        <label asp-for="Model">Model</label>
-        <input asp-for="Model" />
-        <span asp-validation-for="Model" class="text-danger"></span>
-        
-        <label asp-for="Year">Year</label>
-        <input asp-for="Year" />
-        <span asp-validation-for="Year" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Make" class="form-label">Make</label>
+            <input asp-for="Make" class="form-control" />
+            <span asp-validation-for="Make" class="text-danger"></span>
+        </div>
 
-        <label asp-for="Vin">VIN</label>
-        <input asp-for="Vin" />
-        <span asp-validation-for="Vin" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Model" class="form-label">Model</label>
+            <input asp-for="Model" class="form-control" />
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
 
-        <label asp-for="License">License</label>
-        <input asp-for="License" />
-        <span asp-validation-for="License" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Year" class="form-label">Year</label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
 
-        <label asp-for="Price">Price</label>
-        <input asp-for="Price" />
-        <span asp-validation-for="Price" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Vin" class="form-label">VIN</label>
+            <input asp-for="Vin" class="form-control" />
+            <span asp-validation-for="Vin" class="text-danger"></span>
+        </div>
 
-        <label asp-for="UploadedFile">Image of Car</label>
-        <input asp-for="UploadedFile" type="file" />
-        <span asp-validation-for="UploadedFile" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="License" class="form-label">License</label>
+            <input asp-for="License" class="form-control" />
+            <span asp-validation-for="License" class="text-danger"></span>
+        </div>
 
-        <button type="submit">Add Stock</button>
+        <div class="form-group">
+            <label asp-for="Price" class="form-label">Price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UploadedFile" class="form-label">Image of Car</label>
+            <input asp-for="UploadedFile" type="file" class="form-control" />
+            <span asp-validation-for="UploadedFile" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Stock</button>
     </form>
-
-
 </div>
 
 @section Scripts {

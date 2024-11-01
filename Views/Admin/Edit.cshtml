@@ -1,31 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@model CurrentStock
+﻿@model CurrentStock
 
 @{
     ViewData["Title"] = $"Edit {Model.Make} {Model.Model}";
-    string imagedata_as_string = "";
+    string imagedata_as_string = Model.Image != null
+        ? $"data:{Model.Image.FileName};base64,{Convert.ToBase64String(Model.Image.image_data)}"
+        : string.Empty;
 }
 
-<div>
-    <h1>Edit @Model.Year @Model.Make @Model.Model</h1>
-    <div>
-        @if (Model.Image != null) {
-            imagedata_as_string = $"data:{Model.Image.FileName};base64,{Convert.ToBase64String(Model.Image.image_data)}";
+<div class="edit-stock-container">
+    <h1 class="edit-title">Edit @Model.Year @Model.Make @Model.Model</h1>
+
+    <div class="image-container">
+        @if (!string.IsNullOrEmpty(imagedata_as_string)) {
+            <img src="@imagedata_as_string" alt="Car Image" class="car-image" />
         }
+    </div>
 
-        <img src="@imagedata_as_string" alt="Car Image" style="width:200px;height:auto" />
+    <form asp-action="EditPrice" asp-controller="Admin" method="post" class="edit-price-form">
+        <label class="form-label">Current Price</label>
+        <input type="text" readonly value="@Model.Price" class="form-control" />
 
-        <form asp-action="EditPrice" asp-controller="Admin" method="post">
-            <label>Current Price</label>
-            <input readonly value="@Model.Price"/>
+        <label class="form-label">New Price</label>
+        <input type="hidden" name="id" value="@Model.ID" />
+        <input type="number" name="price" class="form-control" required />
 
-            <label>New Price</label>
-            <input for="id" name="id" value="@Model.ID" hidden />
-            <input name="price" for="price" />
-            <button type="submit">Confirm</button>
-        </form>
+        <button type="submit" class="btn">Confirm</button>
+    </form>
+
+    <div class="link-container">
+        <a asp-action="Index" asp-controller="Admin" class="back-link">Back to Stock</a>
     </div>
 </div>

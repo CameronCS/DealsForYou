@@ -1,20 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewData["title"] = "Admin Profile";
+﻿@{
+    ViewData["Title"] = "Admin Profile";
 }
-
 
 @model User
 
-<div>
-    <h1>Admin Profile!</h1>
-    <div>
-        <p>Username: @Model.Username</p>
-        <p>First Name: @Model.FirstName</p>
-        <p>Last Name: @Model.LastName</p>
-        <p>Email: @Model.Email</p>
-        <p>Cell: @Model.Cell</p>
+<div class="admin-profile-container">
+    <h1 class="profile-title">Admin Profile</h1>
+
+    <div class="profile-details">
+        <p class="profile-detail"><strong>Username:</strong> @Model.Username</p>
+        <p class="profile-detail"><strong>First Name:</strong> @Model.FirstName</p>
+        <p class="profile-detail"><strong>Last Name:</strong> @Model.LastName</p>
+        <p class="profile-detail"><strong>Email:</strong> @Model.Email</p>
+        <p class="profile-detail"><strong>Cell:</strong> @Model.Cell</p>
+    </div>
+
+    <div class="action-buttons">
+        <form asp-action="EditProfile" asp-controller="Admin" method="get" class="action-form">
+            <button class="btn edit-profile-button">Edit Profile</button>
+        </form>
+
+        <form asp-action="Index" asp-controller="Admin" method="get" class="action-form">
+            <button class="btn back-dashboard-button">Back to Dashboard</button>
+        </form>
     </div>
 </div>

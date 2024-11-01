@@ -1,0 +1,21 @@
+﻿@model SpecificBalanceModel
+
+@{
+    ViewData["Title"] = "View Specific Balance";
+}
+
+<div class="balance-container">
+    <h1 class="balance-title">Current Balance for @Model.CarYear @Model.CarMake @Model.CarModel</h1>
+
+    <div class="balance-info">
+        <p class="balance-item"><strong>Current Balance:</strong> @Currency.GetCurrency(Model.Current)</p>
+        <p class="balance-item"><strong>Total Amount:</strong> @Currency.GetCurrency(Model.Total)</p>
+    </div>
+
+    <div class="balance-update">
+        <form asp-action="UpdateBalance" asp-controller="Users" method="get">
+            <input name="id" value="@Model.ID" type="hidden" />
+            <button type="submit" class="btn-update">Update Balance</button>
+        </form>
+    </div>
+</div>

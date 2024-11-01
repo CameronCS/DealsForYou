@@ -1,30 +1,31 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Offers";
 }
 
 @model List<OfferPreview>
 
-<div>
-    <h1>All Active Offers</h1>
-    <div>
-        @foreach (OfferPreview item in Model) {
-            <hr />
-            <div>
-                <h2>@item.Year @item.Make @item.Model</h2>
-                <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" style="width:200px;height:auto" />
-                <p>Offer from: @item.Username - @item.FirstName @item.LastName</p>
-                <p>For the: @item.Year @item.Make @item.Model</p>
-                <p>Offer Value: @item.FAmount</p>
+<div class="offers-container">
+    <h1 class="offers-title">All Active Offers</h1>
+    <div class="offers-grid">
+        @if (Model.Count == 0) {
+            <p class="no-offers-message">No active offers available.</p>
+        } else {
+            foreach (OfferPreview item in Model) {
+                <div class="offer-card">
+                    <h2 class="offer-card-title">@item.Year @item.Make @item.Model</h2>
+                    <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" class="offer-card-image" />
+                    <p class="offer-card-user">Offer from: @item.Username - @item.FirstName @item.LastName</p>
+                    <p class="offer-card-details">For the: @item.Year @item.Make @item.Model</p>
+                    <p class="offer-card-value">Offer Value: @Currency.GetCurrency(item.Amount)</p>
 
-                <form asp-controller="Admin" asp-action="Offer" method="post">
-                    <input name="id" value="@item.ID" hidden/>
-                    <input name="user_id" value="@item.UserId" hidden/>
-                    <input name="car_id" value="@item.CarId" hidden/>
-                    <button type="submit">View Offer</button>
-                </form>
-            </div>
-            <hr />
+                    <form asp-controller="Admin" asp-action="Offer" method="post" class="offer-card-form">
+                        <input name="id" value="@item.ID" hidden />
+                        <input name="user_id" value="@item.UserId" hidden />
+                        <input name="car_id" value="@item.CarId" hidden />
+                        <button type="submit" class="btn view-offer-button">View Offer</button>
+                    </form>
+                </div>
+            }
         }
     </div>
 </div>

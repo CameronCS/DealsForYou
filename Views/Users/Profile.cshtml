@@ -1,20 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model User
+
 @{
-    ViewData["title"] = "Profile";
+    ViewData["Title"] = "Profile";
 }
 
+<div class="profile-container">
+    <h1 class="profile-title">User Profile</h1>
 
-@model User
+    <div class="profile-info">
+        <p class="profile-detail"><strong>Username:</strong> @Model.Username</p>
+        <p class="profile-detail"><strong>First Name:</strong> @Model.FirstName</p>
+        <p class="profile-detail"><strong>Last Name:</strong> @Model.LastName</p>
+        <p class="profile-detail"><strong>Email:</strong> @Model.Email</p>
+        <p class="profile-detail"><strong>Cell:</strong> @Model.Cell</p>
+    </div>
 
-<div>
-    <h1>User Profile!</h1>
-    <div>
-        <p>Username: @Model.Username</p>
-        <p>First Name: @Model.FirstName</p>
-        <p>Last Name: @Model.LastName</p>
-        <p>Email: @Model.Email</p>
-        <p>Cell: @Model.Cell</p>
+    <div class="profile-action">
+        <a asp-action="EditProfile" class="edit-button">Edit Profile</a>
     </div>
 </div>

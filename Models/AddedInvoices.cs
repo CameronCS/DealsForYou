@@ -1,36 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-
-namespace DealsForYou.Models {
-    public class CurrentStock {
+﻿namespace DealsForYou.Models {
+    public class AddedInvoices {
         public int ID {
             get; set;
         }
         public string Make {
             get; set;
         }
-
         public string Model {
             get; set;
         }
-
         public int Year {
             get; set;
         }
-
-        public string Vin {
+        public string InvName {
             get; set;
         }
-
-        public string License {
+        public byte[] File {
             get; set;
         }
-
-        public int Price {
-            get; set;
-        }
-
-        public ImageModel Image {
+        public string FileType {
             get; set;
         }
     }

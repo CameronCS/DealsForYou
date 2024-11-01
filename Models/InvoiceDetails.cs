@@ -1,8 +1,9 @@
-﻿using System.Globalization;
-
-namespace DealsForYou.Models {
-    public class OUser {
+﻿namespace DealsForYou.Models {
+    public class InvoiceDetails {
         public int ID {
+            get; set;
+        }
+        public int UserId {
             get; set;
         }
         public string Username {
@@ -20,26 +21,15 @@ namespace DealsForYou.Models {
         public string Cell {
             get; set;
         }
-    }
-
-    public class OOffer {
-        public int ID {
-            get; set;
-        }
-        public int UserId {
-            get; set;
-        }
-        public int CarId {
+        public int OfferId {
             get; set;
         }
         public int Price {
             get; set;
         }
-
         public int OfferAmount {
             get; set;
         }
-
         public int Months {
             get; set;
         }
@@ -49,14 +39,10 @@ namespace DealsForYou.Models {
         public int Monthly {
             get; set;
         }
- 
         public int Total {
             get; set;
         }
-    }
-
-    public class OCar {
-        public int ID {
+        public int CarId {
             get; set;
         }
         public string Make {
@@ -74,22 +60,22 @@ namespace DealsForYou.Models {
         public string License {
             get; set;
         }
-        public int Price {
+        public int CarPrice {
             get; set;
         }
-        public ImageModel Image {
-            get; set;
-        } // Use ImageModel here
-    }
-
-    public class FullOffer {
-        public OUser User {
+        public byte[] ImageData {
             get; set;
         }
-        public OOffer Offer {
+        public string ImageName {
             get; set;
         }
-        public OCar Car {
+        public string FileType {
+            get; set;
+        }
+        public int AdminId {
+            get; set;
+        }
+        public int TransactionID {
             get; set;
         }
     }

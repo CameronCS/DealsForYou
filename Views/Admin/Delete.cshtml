@@ -1,13 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewData["Title"] = "Homie Vaaied";
+﻿@{
+    ViewData["Title"] = "Deleted Item";
 }
 
 @model CurrentStock
 
-<div>
-    <h1>Deleted @Model.Year @Model.Make @Model.Model</h1>
-    <a asp-action="Index" asp-controller="Admin">Go To Stock</a>
+<div class="deleted-item-container">
+    <h1 class="deleted-item-title">Deleted Item</h1>
+    <div class="item-details">
+        <h2 class="item-title">@Model.Year @Model.Make @Model.Model</h2>
+        <p class="item-message">The item has been successfully deleted from the stock.</p>
+        <a asp-action="Index" asp-controller="Admin" class="btn btn-primary">Go To Stock</a>
+    </div>
 </div>

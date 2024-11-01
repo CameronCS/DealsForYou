@@ -1,0 +1,30 @@
+﻿@model SpecificBalanceModel
+
+@{
+    ViewData["Title"] = $"Update Balance for {Model.CarYear} {Model.CarMake} {Model.CarModel}";
+}
+
+<div class="balance-update-container">
+    <h1 class="balance-update-title">Update Balance for @Model.CarYear @Model.CarMake @Model.CarModel</h1>
+
+    <form asp-action="UpdateTransaction" asp-controller="Users" method="post" class="balance-update-form">
+        <p class="total-text">Total: <span class="total-amount">@Model.Total</span></p>
+        <p class="current-text">Current: <span class="current-amount">@Model.Current</span></p>
+
+        <input name="id" value="@Model.ID" type="hidden" />
+
+        <div class="input-group">
+            <label for="current" class="input-label">Update Balance:</label>
+            <input id="current" name="current" type="number" min="0" required class="input-field" />
+        </div>
+
+        <button type="submit" class="update-button">Update</button>
+    </form>
+
+    <div class="cancel-container">
+        <form asp-action="ViewSpecific" asp-controller="Users" style="display: inline;">
+            <input name="id" value="@Model.ID" type="hidden" />
+            <button type="submit" class="cancel-button">Cancel</button>
+        </form>
+    </div>
+</div>

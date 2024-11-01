@@ -1,0 +1,19 @@
+﻿@model UserInvoice
+
+@{
+    ViewData["Title"] = $"Invoice {Model.InvoiceName}";
+}
+
+<div class="invoice-container">
+    <h1 class="invoice-title">View Invoice: @Model.InvoiceName</h1>
+
+    <div class="invoice-preview">
+        <h3 class="preview-header">Invoice Preview:</h3>
+        <iframe src="@Url.Action("ViewInvoicePdf", "Users", new { id = Model.Id })" class="invoice-iframe" title="Invoice Preview"></iframe>
+    </div>
+
+    <div class="invoice-download">
+        <h3 class="download-header">Download Invoice:</h3>
+        <a class="btn btn-download" href="@Url.Action("DownloadInvoice", "Users", new { id = Model.Id })">Download PDF</a>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model List<TransactionViewModel>
+
+@{
+    ViewData["Title"] = "View All Transactions";
+}
+
+<div class="transactions-container">
+    <h1 class="transactions-title">View All Transactions</h1>
+
+    @if (Model != null && Model.Count > 0) {
+        foreach (var item in Model) {
+            <div class="transaction-item">
+                <h2 class="transaction-header">Balance for: @item.CarYear @item.CarMake @item.CarModel</h2>
+                <form asp-action="ViewSpecific" asp-controller="Users" method="get">
+                    <input name="id" value="@item.BalanceID" type="hidden" />
+                    <button type="submit" class="btn-check-balance">Check Balance</button>
+                </form>
+            </div>
+        }
+    } else {
+        <p class="no-transactions-message">No transactions found.</p>
+    }
+</div>

@@ -1,35 +1,35 @@
-create database part3asp;
-use part3asp;
+CREATE DATABASE part3asp;
+USE part3asp;
 
-create table User(
-	id int auto_increment not null primary key,
-    username varchar(50) not null,
-    password varchar(50) not null,
-    FirstName varchar(50) not null,
-    LastName varchar(50) not null,
-    Email varchar(50) not null,
-    Cell varchar(50) not null,
-    isAdmin boolean not null
+CREATE TABLE User (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Cell VARCHAR(50) NOT NULL,
+    isAdmin BOOLEAN NOT NULL
 );
 
-create table car(
-	id int auto_increment not null primary key,
-	make varchar(50) not null,
-    model varchar(50) not null,
-    year int not null,
-    vin varchar(50) not null,
-    license varchar(50) not null,
-    price int not null,
-    image longblob not null,
-    image_name varchar(50) not null,
-    file_type varchar(50) not null,
-    available boolean not null
+CREATE TABLE car (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    make VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    vin VARCHAR(50) NOT NULL,
+    license VARCHAR(50) NOT NULL,
+    price INT NOT NULL,
+    image LONGBLOB NOT NULL,
+    image_name VARCHAR(50) NOT NULL,
+    file_type VARCHAR(50) NOT NULL,
+    available BOOLEAN NOT NULL
 );
 
-create table balance (
-	id int auto_increment not null primary key,
-    total int not null,
-    current int not null
+CREATE TABLE balance (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    total INT NOT NULL,
+    current INT NOT NULL
 );
 
 CREATE TABLE transaction (
@@ -46,26 +46,41 @@ CREATE TABLE transaction (
     CHECK (user_id <> admin_id)
 );
 
-create table invoice(
-	id int auto_increment not null primary key,
-    trans_id int not null,
-    inv_name varchar(50) not null,
-    file longblob not null,
-    file_type varchar(50)
+CREATE TABLE invoice (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    trans_id INT NOT NULL,
+    inv_name VARCHAR(50) NOT NULL,
+    file LONGBLOB NOT NULL,
+    file_type VARCHAR(50),
+    FOREIGN KEY (trans_id) REFERENCES transaction(id) -- Reference the transaction
 );
 
-create table offer(
-	id int auto_increment not null primary key,
-    user_id int not null,
-    car_id int not null,
-    price int not null,
-    offer int not null,
-    months int not null,
-    interest int not null,
-    monthly int not null,
-    total int not null,
-    foreign key (user_id) references user(id),
-    foreign key (car_id) references car(id)
+CREATE TABLE offer (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    user_id INT NOT NULL,
+    car_id INT NOT NULL,
+    price INT NOT NULL,
+    offer INT NOT NULL,
+    months INT NOT NULL,
+    interest INT NOT NULL,
+    monthly INT NOT NULL,
+    total INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (car_id) REFERENCES car(id)
 );
 
-CREATE VIEW available_cars AS SELECT * FROM car WHERE available = TRUE;
+-- Optionally, create an archive or history table for offers
+CREATE TABLE archived_offer (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    user_id INT NOT NULL,
+    car_id INT NOT NULL,
+    price INT NOT NULL,
+    offer INT NOT NULL,
+    months INT NOT NULL,
+    interest INT NOT NULL,
+    monthly INT NOT NULL,
+    total INT NOT NULL,
+    deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Keep track of when the offer was deleted
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (car_id) REFERENCES car(id)
+);

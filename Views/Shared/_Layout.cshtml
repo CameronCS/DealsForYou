@@ -4,76 +4,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DealsForYou</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DealsForYou.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true"/>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> <!--Conditional Rendering of Nav-->
-                    @if (AppStateModel.State == 0) {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
-                            </li>
-                        </ul>
-                    } else if (AppStateModel.State == 1) {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Shop</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Profile">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="LogOut">Log Out</a>
-                            </li>
-                        </ul>
-                    } else {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Manage Stock</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AddStock">Add Stock</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Offers">Offers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Profile">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="LogOut">Log Out</a>
-                            </li>
-                        </ul>
-                    }
-                </div>
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <img src="~/resources/Logo.jpg" alt="DealsForYou Logo" />
+            </div>
+            <div class="navbar-links">
+                @if (AppStateModel.State == 0) {
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("Login", "Home")">Login</a></li>
+                        <li><a href="@Url.Action("Register", "Home")">Register</a></li>
+                    </ul>
+                } else if (AppStateModel.State == 1) {
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Users")">Shop</a></li>
+                        <li><a href="@Url.Action("ViewTransaction", "Users")">Transactions</a></li>
+                        <li><a href="@Url.Action("ViewAllInvoices", "Users")">Invoices</a></li>
+                        <li><a href="@Url.Action("Profile", "Users")">Profile</a></li>
+                        <li><a href="@Url.Action("LogOut", "Users")">Log Out</a></li>
+                    </ul>
+                } else {
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Admin")">Manage</a></li>
+                        <li><a href="@Url.Action("AddStock", "Admin")">Add</a></li>
+                        <li><a href="@Url.Action("Offers", "Admin")">Offers</a></li>
+                        <li><a href="@Url.Action("ViewAllInvoices", "Admin")">Invoices</a></li>
+                        <li><a href="@Url.Action("Profile", "Admin")">Profile</a></li>
+                        <li><a href="@Url.Action("LogOut", "Admin")">Log Out</a></li>
+                    </ul>
+                }
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="footer">
+        <div class="footer-content">
             <p>Cam is fantastic</p>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

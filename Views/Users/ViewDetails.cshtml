@@ -1,33 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model CurrentStock
+﻿@model CurrentStock
+
 @{
-    ViewData["Title"] = $"{Model.Year} {Model.Make} {Model.Make}";
+    ViewData["Title"] = $"{Model.Year} {Model.Make} {Model.Model}";
 }
 
-<div>
-    <h1>Car Details</h1>
-    <div>
-        <h2>@Model.Year @Model.Make @Model.Model</h2>
-        <div>
-            <img src="data:@Model.Image.FileName;Base64,@Convert.ToBase64String(Model.Image.image_data)" style="width:200px;height:auto" />
-        </div>
-        <div>
-            <ul>
-                <li>Vin Number: @Model.Vin</li>
-                <li>License: @Model.License</li>
-            </ul>
+<div class="car-details-container">
+    <h1 class="car-details-title">Car Details</h1>
 
-            <h3>Price: @Model.FPrice</h3>
+    <div class="car-info">
+        <h2 class="car-title">@Model.Year @Model.Make @Model.Model</h2>
+        <img src="data:@Model.Image.FileName;Base64,@Convert.ToBase64String(Model.Image.image_data)" class="car-image" alt="Car Image" />
+    </div>
 
+    <div class="car-details">
+        <ul class="car-specs">
+            <li><strong>Vin Number:</strong> @Model.Vin</li>
+            <li><strong>License:</strong> @Model.License</li>
+        </ul>
+
+        <h3 class="car-price">Price: @Currency.GetCurrency(Model.Price)</h3>
+
+        <div class="button-group">
             <form asp-action="Payment" asp-controller="Users" method="post">
-                <input for="id" name="id" value="@Model.ID" hidden/>
-                <button type="submit">Continue To Payment</button>
+                <input name="id" value="@Model.ID" type="hidden" />
+                <button type="submit" class="btn btn-primary">Continue To Payment</button>
             </form>
 
             <form asp-action="Index" asp-controller="Users" method="get">
-                <button type="submit">Go Back</button>
+                <button type="submit" class="btn btn-secondary">Go Back</button>
             </form>
         </div>
     </div>

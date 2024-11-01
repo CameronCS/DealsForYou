@@ -4,24 +4,23 @@
 
 @model List<CurrentStock>
 
-<div>
-    <h1>Shop Our Items</h1>
-    @foreach (CurrentStock item in Model) {
-        <hr />
-        <div>
-            <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" style="width:200px;height:auto" />
+<div class="shop-container">
+    <h1 class="shop-title">Shop Our Items</h1>
+    <div class="items-grid">
+        @foreach (CurrentStock item in Model) {
+            <div class="item-card">
+                <img src="data:@item.Image.FileName;Base64,@Convert.ToBase64String(item.Image.image_data)" alt="Car Image" class="item-image" />
 
-            <p>Make: @item.Make</p>
-            <p>Model: @item.Model</p>
-            <p>Year: @item.Year</p>
-            <p>Price: @item.FPrice</p>
-        </div>
+                <p class="item-make"><strong>Make:</strong> @item.Make</p>
+                <p class="item-model"><strong>Model:</strong> @item.Model</p>
+                <p class="item-year"><strong>Year:</strong> @item.Year</p>
+                <p class="item-price"><strong>Price:</strong> @Currency.GetCurrency(item.Price)</p>
 
-        <form asp-action="ViewDetails" asp-controller="Users" method="get">
-            <input name="id" for="id" value="@item.ID" hidden/>
-            <button type="submit">View Details</button>
-        </form>
-        <hr />
-    }
-
+                <form asp-action="ViewDetails" asp-controller="Users" method="get">
+                    <input name="id" value="@item.ID" type="hidden" />
+                    <button type="submit" class="view-details-button">View Details</button>
+                </form>
+            </div>
+        }
+    </div>
 </div>

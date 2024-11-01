@@ -1,0 +1,36 @@
+﻿@model ViewSpecificInvoice
+
+@{
+    ViewData["Title"] = "View Invoice";
+}
+
+<div class="invoice-details-container">
+    <h1 class="invoice-title">Invoice Details</h1>
+
+    <div class="invoice-info">
+        <p><strong>Invoice ID:</strong> @Model.ID</p>
+        <p><strong>File Name:</strong> @Model.FileName</p>
+    </div>
+
+    @if (Model.File != null) {
+        <div class="download-button">
+            <a href="@Url.Action("DownloadInvoice", "Admin", new { id = Model.ID })" class="btn download-invoice-button">Download Invoice</a>
+        </div>
+
+        <h3 class="invoice-preview-title">Invoice Preview:</h3>
+        <div class="invoice-preview">
+            <iframe src="data:@Model.FileType;base64,@Convert.ToBase64String(Model.File)" width="100%" height="600px" class="invoice-frame"></iframe>
+        </div>
+    } else {
+        <p class="no-file-message">No file available for this invoice.</p>
+    }
+
+    <div class="action-buttons">
+        <form asp-controller="Admin" asp-action="ViewAllInvoices" class="button-form">
+            <button type="submit" class="btn back-button">Go Back</button>
+        </form>
+        <form asp-controller="Admin" asp-action="Index" class="button-form">
+            <button type="submit" class="btn home-button">Go Home</button>
+        </form>
+    </div>
+</div>
